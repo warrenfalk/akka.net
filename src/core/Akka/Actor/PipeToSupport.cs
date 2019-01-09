@@ -25,8 +25,13 @@ namespace Akka.Actor
         /// <param name="taskToPipe">TBD</param>
         /// <param name="recipient">TBD</param>
         /// <param name="sender">TBD</param>
-        /// <param name="success">TBD</param>
-        /// <param name="failure">TBD</param>
+        /// <param name="success">
+        ///     A function to map from the task result to an arbitrary message to send to the recipient when/if the result completes and is not canceled or faulted.
+        ///     If null (default) the task result itself is sent
+        /// </param>
+        /// <param name="failure">
+        ///     A function to map from the task exception to an arbitrary message to send to the recipient when/if the result is canceled or faulted.
+        ///     If null (default) the exception is sent wrapped in a <see cref="Status.Failure">Status.Failure</see></param>
         /// <returns>TBD</returns>
         public static Task PipeTo<T>(this Task<T> taskToPipe, ICanTell recipient, IActorRef sender = null, Func<T, object> success = null, Func<Exception, object> failure = null)
         {
@@ -51,8 +56,14 @@ namespace Akka.Actor
         /// <param name="taskToPipe">TBD</param>
         /// <param name="recipient">TBD</param>
         /// <param name="sender">TBD</param>
-        /// <param name="success">TBD</param>
-        /// <param name="failure">TBD</param>
+        /// <param name="success">
+        ///     A function that returns an arbitrary message to send to the recipient when/if the result completes and is not canceled or faulted.
+        ///     If null (default) the task result itself is sent
+        /// </param>
+        /// <param name="failure">
+        ///     A function to map from the task exception to an arbitrary message to send to the recipient when/if the result is canceled or faulted.
+        ///     If null (default) the exception is sent wrapped in a <see cref="Status.Failure">Status.Failure</see></param>
+        /// <returns>TBD</returns>
         /// <returns>TBD</returns>
         public static Task PipeTo(this Task taskToPipe, ICanTell recipient, IActorRef sender = null, Func<object> success = null, Func<Exception, object> failure = null)
         {
